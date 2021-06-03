@@ -141,25 +141,19 @@ def escalation_email(self):
 						<td>
 							<p><strong>{11}</strong></p>
 						</td>
-					</tr>
-					<tr>
-						<td>
-							<p><strong>Type of complaint</strong></p>
-						</td>
-						<td>
-							<p><strong>{12}</strong></p>
-						</td>
-					</tr>
+					</tr>	
 					<tr>
 						<td>
 							<p><strong>Issue Description</strong></p>
 						</td>
 						<td>
-							<p><strong>{13}</strong></p>
+							<p><strong>{12}</strong></p>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			<br>
+			<a href="/desk#Form/Issue/{13}">{14}</a>
 			""".format(
 				self.name,
 				self.opening_date +' ' + self.opening_time,
@@ -173,8 +167,9 @@ def escalation_email(self):
 				self.email or '',
 				self.primary_location or '',
 				self.secondary_location or '',
-				self.type_of_complaint or '',
-				self.issue_description or ''
+				self.issue_description or '',
+				self.name,
+				self.name,
 			)
 		recipients = []
 		if not self.escalation_1_sent:
@@ -197,7 +192,7 @@ def escalation_email(self):
 			frappe.sendmail(
 				recipients=recipients,
 				cc = '',
-				subject =  self.name + ' : ' + self.subject,
+				subject =  "SLA Escalation. Case Number : " + self.name,
 				#sender = sender,
 				message = message
 			)
